@@ -777,4 +777,15 @@ f = CSV.File(IOBuffer(join((rand(("a,$(rand())", "b,$(rand())")) for _ = 1:10^6)
 f = CSV.File(IOBuffer("a\nfalse\n"))
 @test eltype(f.a) == Bool
 
+# 982
+data = """a,b,c,d
+A,BB,CCC,DDDD
+A,BB,CCC,DDDD
+"""
+f = CSV.File(IOBuffer(data))
+@test !(f.a isa PooledArray)
+@test !(f.b isa PooledArray)
+@test !(f.c isa PooledArray)
+@test f.d isa PooledArray
+
 end
