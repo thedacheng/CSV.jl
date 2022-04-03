@@ -310,6 +310,9 @@ end
     stream = CodecZlib.TranscodingStream(codec, output)
     Base.write(stream, x)
     close(stream)
+    stream = nothing
+    close(output)
+    output = nothing
     return Mmap.mmap(file), file
 end
 
